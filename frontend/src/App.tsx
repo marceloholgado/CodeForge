@@ -1,31 +1,41 @@
-import { useState } from "react";
-import ProgrammingLanguage from "./components/formfields/Language";
+import { useEffect, useState } from "react";
 
-const optionsByLanguage = {
+type LanguageOptions = {
+  libs: string[];
+  resources: string[];
+  frameworks: string[];
+};
+
+const optionsByLanguage: Record<string, LanguageOptions> = {
   "C++": {
     libs: ["Boost", "SDL2", "OpenCV"],
-    recursos: ["Interface gráfica", "Rede", "Multithreading"],
-    frameworks: ["Google Test", "Catch2", "Doctest"],
-  },
-  "C++2": {
-    libs: ["Boost", "SDL2", "OpenCV"],
-    recursos: ["Interface gráfica", "Rede", "Multithreading"],
+    resources: ["Interface gráfica", "Rede", "Multithreading"],
     frameworks: ["Google Test", "Catch2", "Doctest"],
   },
 };
 
 function App() {
-  const languages = Object.keys(optionsByLanguage);
+  const languages: string[] = Object.keys(optionsByLanguage);
 
   const [language, setLanguage] = useState(languages[0]);
 
-  const libs = optionsByLanguage[languages[0]]?.libs || [];
-  const recursos = optionsByLanguage[languages[0]]?.recursos || [];
-  const frameworks = optionsByLanguage[languages[0]]?.frameworks || [];
+  const [libs, setLibs] = useState(optionsByLanguage[languages[0]]?.libs || []);
+  const [resources, setResources] = useState(
+    optionsByLanguage[languages[0]]?.resources || []
+  );
+  const [frameworks, setFrameworks] = useState(
+    optionsByLanguage[languages[0]]?.frameworks || []
+  );
 
-  function defineProgrammingLanguage(lang) {
+  function defineProgrammingLanguage(lang: string) {
     setLanguage(lang);
   }
+
+  useEffect(() => {
+    setLibs(optionsByLanguage[language].libs);
+    setResources(optionsByLanguage[language].resources);
+    setFrameworks(optionsByLanguage[language].frameworks);
+  }, [language]);
 
   return (
     <div className="p-4 w-screen h-screen flex flex-col bg-slate-500 text-slate-50 font-bold">
@@ -48,7 +58,7 @@ function App() {
               Linguagem
             </label>
             <select
-              value={(languages[0], languages[1])}
+              value={language}
               onChange={(e) => defineProgrammingLanguage(e.target.value)}
               className="w-full p-2 rounded-md border border-gray-300"
             >
@@ -112,11 +122,13 @@ function App() {
             </select>
           </div>
 
-          {/* Recursos */}
+          {/* resources */}
           <div>
-            <label className="block text-sm font-semibold mb-1">Recursos</label>
+            <label className="block text-sm font-semibold mb-1">
+              resources
+            </label>
             <select className="w-full p-2 rounded-md border border-gray-300">
-              {recursos.map((r) => (
+              {resources.map((r) => (
                 <option key={r}>{r}</option>
               ))}
             </select>
