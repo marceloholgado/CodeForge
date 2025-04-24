@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProgrammingLanguage from "./components/formfields/Language";
 
 const optionsByLanguage = {
   "C++": {
@@ -6,18 +7,28 @@ const optionsByLanguage = {
     recursos: ["Interface gráfica", "Rede", "Multithreading"],
     frameworks: ["Google Test", "Catch2", "Doctest"],
   },
-  // futuras linguagens aqui...
+  "C++2": {
+    libs: ["Boost", "SDL2", "OpenCV"],
+    recursos: ["Interface gráfica", "Rede", "Multithreading"],
+    frameworks: ["Google Test", "Catch2", "Doctest"],
+  },
 };
 
 function App() {
-  const [language, setLanguage] = useState("C++");
+  const languages = Object.keys(optionsByLanguage);
 
-  const libs = optionsByLanguage[language]?.libs || [];
-  const recursos = optionsByLanguage[language]?.recursos || [];
-  const frameworks = optionsByLanguage[language]?.frameworks || [];
+  const [language, setLanguage] = useState(languages[0]);
+
+  const libs = optionsByLanguage[languages[0]]?.libs || [];
+  const recursos = optionsByLanguage[languages[0]]?.recursos || [];
+  const frameworks = optionsByLanguage[languages[0]]?.frameworks || [];
+
+  function defineProgrammingLanguage(lang) {
+    setLanguage(lang);
+  }
 
   return (
-    <div className="p-6 w-screen h-screen flex flex-col bg-slate-500 text-slate-50 font-bold">
+    <div className="p-4 w-screen h-screen flex flex-col bg-slate-500 text-slate-50 font-bold">
       <h1 className="text-4xl mt-8 text-center">CodeForge</h1>
 
       <div className="flex-grow flex items-center justify-center">
@@ -32,22 +43,20 @@ function App() {
               className="w-full p-2 rounded-md border border-gray-300"
             />
           </div>
-
-          {/* Linguagem */}
           <div>
             <label className="block text-sm font-semibold mb-1">
               Linguagem
             </label>
             <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={(languages[0], languages[1])}
+              onChange={(e) => defineProgrammingLanguage(e.target.value)}
               className="w-full p-2 rounded-md border border-gray-300"
             >
-              <option value="C++">C++</option>
-              {/* adicionar mais opções futuramente */}
+              {languages.map((lang) => (
+                <option key={lang}>{lang}</option>
+              ))}
             </select>
           </div>
-
           {/* SO alvo */}
           <div>
             <label className="block text-sm font-semibold mb-2">SO alvo</label>
