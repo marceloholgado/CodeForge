@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "./components/formfields/Select";
+import axios from "axios";
 
 type LanguageOptions = {
   libs: string[];
@@ -15,9 +16,22 @@ const optionsByLanguage: Record<string, LanguageOptions> = {
     resources: ["Interface gráfica", "Rede", "Multithreading"],
     frameworks: ["Google Test", "Catch2", "Doctest"],
   },
+  JAVA: {
+    libs: ["SpringBoot", "Hibernate"],
+    bsystem: ["g++", "g++ C++11"],
+    resources: ["Interface gráfica", "Rede", "Multithreading"],
+    frameworks: ["Google Test", "Catch2", "Doctest"],
+  },
 };
 
 function App() {
+  const [projectName, setProjectName] = useState("");
+  const [targetOS, setTargetOS] = useState("windows");
+  const [selectedLib, setSelectedLib] = useState("");
+  const [selectedBsystem, setSelectedBsystem] = useState("");
+  const [selectedResource, setSelectedResource] = useState("");
+  const [selectedFramework, setSelectedFramework] = useState("");
+
   const languages: string[] = Object.keys(optionsByLanguage);
 
   const [language, setLanguage] = useState(languages[0]);
@@ -37,6 +51,22 @@ function App() {
     setLanguage(lang);
   }
 
+  function defineLib(lib: string) {
+    setSelectedLib(lib);
+  }
+
+  function defineBSystem(bsystem: string) {
+    setSelectedBsystem(bsystem);
+  }
+
+  function defineResource(resource: string) {
+    setSelectedResource(resource);
+  }
+
+  function defienFramework(framework: string) {
+    setSelectedFramework(framework);
+  }
+
   useEffect(() => {
     setLibs(optionsByLanguage[language].libs);
     setBuildSystem(optionsByLanguage[language].bsystem);
@@ -44,9 +74,31 @@ function App() {
     setFrameworks(optionsByLanguage[language].frameworks);
   }, [language]);
 
+  function onClickDownloadButton(): void {
+    const body = {
+      project_name: projectName,
+      lang: language,
+      lib: selectedLib,
+      build_system: selectedBsystem,
+      resources: selectedResource,
+      frameworks: selectedFramework,
+      target_os: targetOS,
+    };
+
+    axios
+      .post("https://api.example.com/", body)
+      .then(function (response) {
+        console.log("Projeto gerado com sucesso:", response.data);
+        // Aqui você pode acionar o download do arquivo, se o backend retornar um zip ou algo assim.
+      })
+      .catch(function (error) {
+        console.error("Erro ao gerar projeto:", error);
+      });
+  }
+
   return (
     <div className="p-2 w-screen h-screen flex flex-col bg-slate-500 text-slate-50 font-bold">
-      <h1 className="text-4xl mt-2 mb-1 text-center">CodeForge</h1>
+      <h1 className="text-4xl mt-2 mb-2 text-center">CodeForge</h1>
 
       <div className="flex-grow flex items-center justify-center">
         <div className="p-6 w-[28rem] bg-slate-200 rounded-2xl shadow-lg text-black space-y-4">
@@ -58,22 +110,15 @@ function App() {
             <input
               type="text"
               className="w-full p-2 rounded-md border border-gray-300"
+              onChange={(e) => setProjectName(e.target.value)}
             />
           </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">
-              Linguagem
-            </label>
-            <select
-              value={language}
-              onChange={(e) => defineProgrammingLanguage(e.target.value)}
-              className="w-full p-2 rounded-md border border-gray-300"
-            >
-              {languages.map((lang) => (
-                <option key={lang}>{lang}</option>
-              ))}
-            </select>
-          </div>
+
+          <Select
+            label="Language"
+            options={languages}
+            onChange={defineProgrammingLanguage}
+          />
 
           {/* SO alvo */}
           <div>
@@ -84,7 +129,9 @@ function App() {
                   type="radio"
                   name="so"
                   value="windows"
+                  checked={targetOS === "windows"}
                   className="accent-blue-600"
+                  onChange={(e) => setTargetOS(e.target.value)}
                 />
                 Windows
               </label>
@@ -93,7 +140,9 @@ function App() {
                   type="radio"
                   name="so"
                   value="linux"
+                  checked={targetOS === "windows"}
                   className="accent-green-600"
+                  onChange={(e) => setTargetOS(e.target.value)}
                 />
                 Linux
               </label>
@@ -102,7 +151,9 @@ function App() {
                   type="radio"
                   name="so"
                   value="macos"
+                  checked={targetOS === "windows"}
                   className="accent-purple-600"
+                  onChange={(e) => setTargetOS(e.target.value)}
                 />
                 macOS
               </label>
@@ -110,19 +161,34 @@ function App() {
           </div>
 
           {/* Build System */}
-          <Select label="Build System" options={bsystem} />
+          <Select
+            label="Build System"
+            options={bsystem}
+            onChange={defineBSystem}
+          />
 
           {/* Libs */}
-          <Select label="Libs" options={libs} />
+          <Select label="Libs" options={libs} onChange={defineLib} />
 
           {/* Resources */}
-          <Select label="resources" options={resources} />
+          <Select
+            label="resources"
+            options={resources}
+            onChange={defineResource}
+          />
 
           {/* Framework de teste */}
-          <Select label="Test Framework" options={frameworks} />
+          <Select
+            label="Test Framework"
+            options={frameworks}
+            onChange={defienFramework}
+          />
 
           <div>
-            <button className="w-full p-2 bg-green-200 rounded-md">
+            <button
+              onClick={onClickDownloadButton}
+              className="w-full p-2 bg-green-200 rounded-md"
+            >
               Download Project
             </button>
           </div>
