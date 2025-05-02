@@ -1,0 +1,12 @@
+{
+  "name": "codeforgeserver",
+  "version": "1.0.0",
+  "description": "backend of codeforge page",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Marcelo Holgado",
+  "license": "ISC",
+  "keywords": []
+}
