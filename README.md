@@ -1,3 +1,3 @@
 # 🚀 CodeForge
 
-**CodeForge** is a powerful and flexible project scaffolding tool for developers. Starting with **C++**, it allows users to generate modern, production-ready boilerplate code with just a few clicks.
+**CodeForge** is a tool designed to learn React.js and Node.js. With it, developers and users can generate their project startup with just a few clicks.
