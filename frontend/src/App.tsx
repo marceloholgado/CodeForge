@@ -112,10 +112,10 @@ function App() {
 
       <div className="flex-grow flex items-center justify-center">
         <div className="p-6 w-[28rem] bg-slate-200 rounded-2xl shadow-lg text-black space-y-4">
-          {/* Nome do projeto */}
+          {/* Pproject Name */}
           <div>
             <label className="block text-sm font-semibold mb-1">
-              Nome do projeto
+              Project Name
             </label>
             <input
               type="text"
