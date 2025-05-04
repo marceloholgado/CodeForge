@@ -8,5 +8,13 @@
   },
   "author": "Marcelo Holgado",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
 }
