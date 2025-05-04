@@ -16,12 +16,12 @@ const optionsByLanguage: Record<string, LanguageOptions> = {
     resources: ["Interface gráfica", "Rede", "Multithreading"],
     frameworks: ["Google Test", "Catch2", "Doctest"],
   },
-  JAVA: {
+  /*JAVA: {
     libs: ["SpringBoot", "Hibernate"],
-    bsystem: ["g++", "g++ C++11"],
-    resources: ["Interface gráfica", "Rede", "Multithreading"],
-    frameworks: ["Google Test", "Catch2", "Doctest"],
-  },
+    bsystem: ["JAVA"],
+    resources: ["Interface gráfica", "Console"],
+    frameworks: ["JUnit", "TestNG", "Mockito"],
+  },*/
 };
 
 function App() {
@@ -84,15 +84,25 @@ function App() {
       frameworks: selectedFramework,
       target_os: targetOS,
     };
-
+    console.log("Inciando criação do projeto");
     axios
-      .post("https://api.example.com/", body)
-      .then(function (response) {
-        console.log("Projeto gerado com sucesso:", response.data);
-        // Aqui você pode acionar o download do arquivo, se o backend retornar um zip ou algo assim.
+      .post("http://localhost:3000/generate", body, {
+        responseType: "blob", // <- isso é essencial para lidar com arquivos
       })
-      .catch(function (error) {
-        console.error("Erro ao gerar projeto:", error);
+      .then((response) => {
+        const blob = new Blob([response.data], { type: "application/zip" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${body.project_name}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao gerar o projeto:", error);
       });
   }
 
