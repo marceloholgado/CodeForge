@@ -1,5 +1,3 @@
-import { ChangeEventHandler } from "react";
-
 type SelectFieldProps = {
   label: string;
   options: string[];
