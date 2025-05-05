@@ -4,11 +4,13 @@
   "description": "backend of codeforge page",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "dev": "vercel dev",
+    "start": "vercel dev"
   },
   "author": "Marcelo Holgado",
   "license": "ISC",
   "keywords": [],
+  "type": "module",
   "dependencies": {
     "archiver": "^7.0.1",
     "cors": "^2.8.5",
@@ -16,5 +18,8 @@
     "fs-extra": "^11.3.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }

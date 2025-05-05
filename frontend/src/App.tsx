@@ -13,27 +13,34 @@ const optionsByLanguage: Record<string, LanguageOptions> = {
   "C++": {
     libs: ["Boost", "SDL2", "OpenCV"],
     bsystem: ["g++", "g++ C++11"],
-    resources: ["Interface gráfica", "Rede", "Multithreading"],
+    resources: ["Graphic Interface ", "Rede", "Multithreading"],
     frameworks: ["Google Test", "Catch2", "Doctest"],
   },
   /*JAVA: {
     libs: ["SpringBoot", "Hibernate"],
     bsystem: ["JAVA"],
-    resources: ["Interface gráfica", "Console"],
+    resources: ["Interface", "Console"],
     frameworks: ["JUnit", "TestNG", "Mockito"],
   },*/
 };
 
 function App() {
-  const [projectName, setProjectName] = useState("");
-  const [targetOS, setTargetOS] = useState("windows");
-  const [selectedLib, setSelectedLib] = useState("");
-  const [selectedBsystem, setSelectedBsystem] = useState("");
-  const [selectedResource, setSelectedResource] = useState("");
-  const [selectedFramework, setSelectedFramework] = useState("");
-
   const languages: string[] = Object.keys(optionsByLanguage);
 
+  const [projectName, setProjectName] = useState("");
+  const [targetOS, setTargetOS] = useState("Windows");
+  const [selectedLib, setSelectedLib] = useState(
+    optionsByLanguage[languages[0]]?.libs[0]
+  );
+  const [selectedBsystem, setSelectedBsystem] = useState(
+    optionsByLanguage[languages[0]]?.bsystem[0]
+  );
+  const [selectedResource, setSelectedResource] = useState(
+    optionsByLanguage[languages[0]]?.resources[0]
+  );
+  const [selectedFramework, setSelectedFramework] = useState(
+    optionsByLanguage[languages[0]]?.frameworks[0]
+  );
   const [language, setLanguage] = useState(languages[0]);
 
   const [libs, setLibs] = useState(optionsByLanguage[languages[0]]?.libs || []);
@@ -130,7 +137,7 @@ function App() {
             onChange={defineProgrammingLanguage}
           />
 
-          {/* SO alvo */}
+          {/* SO */}
           <div>
             <label className="block text-sm font-semibold mb-2">SO alvo</label>
             <div className="flex gap-4">
@@ -139,7 +146,7 @@ function App() {
                   type="radio"
                   name="so"
                   value="windows"
-                  checked={targetOS === "windows"}
+                  checked={targetOS === "Windows"}
                   className="accent-blue-600"
                   onChange={(e) => setTargetOS(e.target.value)}
                 />
@@ -150,7 +157,6 @@ function App() {
                   type="radio"
                   name="so"
                   value="linux"
-                  checked={targetOS === "windows"}
                   className="accent-green-600"
                   onChange={(e) => setTargetOS(e.target.value)}
                 />
@@ -161,7 +167,6 @@ function App() {
                   type="radio"
                   name="so"
                   value="macos"
-                  checked={targetOS === "windows"}
                   className="accent-purple-600"
                   onChange={(e) => setTargetOS(e.target.value)}
                 />
@@ -187,7 +192,7 @@ function App() {
             onChange={defineResource}
           />
 
-          {/* Framework de teste */}
+          {/* Framework */}
           <Select
             label="Test Framework"
             options={frameworks}
