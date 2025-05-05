@@ -1,11 +1,16 @@
-const express = require("express");
-const fs = require("fs-extra");
-const archiver = require("archiver");
-const path = require("path");
-const { generateProject } = require("./generateProject");
-const swaggerUi = require("swagger-ui-express");
-const swaggerJSDoc = require("swagger-jsdoc");
-const cors = require("cors");
+import express from "express";
+import fs from "fs-extra";
+import archiver from "archiver";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import generateProject from "./generateProject.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
+import cors from "cors";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3000;

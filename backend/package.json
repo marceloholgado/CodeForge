@@ -4,8 +4,8 @@
   "description": "backend of codeforge page",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",
-    "start": "vercel dev"
+    "start": "node index.js",
+    "dev": "node index.js"
   },
   "author": "Marcelo Holgado",
   "license": "ISC",
@@ -20,6 +20,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   }
 }

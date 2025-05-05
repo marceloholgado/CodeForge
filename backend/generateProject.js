@@ -1,5 +1,5 @@
-const fs = require("fs-extra");
-const path = require("path");
+import fs from "fs-extra";
+import path from "path";
 
 /**
  * Generates the content for the main C++ source file (main.cpp) based on the given configuration.
@@ -40,4 +40,4 @@ async function generateProject(config, basePath) {
   await fs.writeFile(path.join(basePath, "Makefile"), makefileContent);
 }
 
-module.exports = { generateProject };
+export default generateProject;
