@@ -93,9 +93,13 @@ function App() {
     };
     console.log("Inciando criação do projeto");
     axios
-      .post("codeforge-production-60a3.up.railway.app/generate", body, {
-        responseType: "blob", // <- isso é essencial para lidar com arquivos
-      })
+      .post(
+        "https://codeforge-production-60a3.up.railway.app//generate",
+        body,
+        {
+          responseType: "blob", // <- isso é essencial para lidar com arquivos
+        }
+      )
       .then((response) => {
         const blob = new Blob([response.data], { type: "application/zip" });
         const url = window.URL.createObjectURL(blob);
