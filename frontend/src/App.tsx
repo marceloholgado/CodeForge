@@ -93,7 +93,7 @@ function App() {
     };
     console.log("Inciando criação do projeto");
     axios
-      .post("http://localhost:3000/generate", body, {
+      .post("codeforge-production-60a3.up.railway.app/generate", body, {
         responseType: "blob", // <- isso é essencial para lidar com arquivos
       })
       .then((response) => {
